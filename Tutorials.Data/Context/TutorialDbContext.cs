@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Tutorials.Data.Entities;
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace Tutorials.Data.Context
 {
-    public class TutorialDbContext:DbContext
+    public class TutorialDbContext : IdentityDbContext<User>
     {
         public TutorialDbContext(DbContextOptions<TutorialDbContext> Options):base(Options)
         {
