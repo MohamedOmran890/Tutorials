@@ -31,14 +31,14 @@ namespace Tutorials.Api.Controllers
                 return  NotFound();
             return Ok(teacher);
         }
-        [HttpGet("GetByName")]
-        public async Task<IActionResult> GetByName([FromQuery] string Name)
-        {
-            var teachers = await _teacherRepository.GetByName(Name);
-            if (teachers == null)
-                return NotFound();
-            return Ok(teachers);
-        }
+        //[HttpGet("GetByName")]
+        //public async Task<IActionResult> GetByName([FromQuery] string Name)
+        //{
+        //    var teachers = await _teacherRepository.GetByName(Name);
+        //    if (teachers == null)
+        //        return NotFound();
+        //    return Ok(teachers);
+        //}
         [HttpGet("GetTeacherByCity")]
         public async Task<IActionResult> GetTeacherByCity([FromQuery]string City)
         {
