@@ -4,6 +4,9 @@ using Tutorial.Infstructures.Repository;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Data.Context;
 using AutoMapper;
+using Tutorials.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Tutorials.Api.Mapper;
 
 
@@ -25,6 +28,7 @@ namespace Tutorials.Api
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
             builder.Services.AddAutoMapper(typeof(UserProfile));
+            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>();
 
             var app = builder.Build();
 
