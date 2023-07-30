@@ -3,6 +3,9 @@ using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.Repository;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Data.Context;
+using AutoMapper;
+using Tutorials.Api.Mapper;
+
 
 namespace Tutorials.Api
 {
@@ -13,7 +16,6 @@ namespace Tutorials.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +24,7 @@ namespace Tutorials.Api
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
+            builder.Services.AddAutoMapper(typeof(UserProfile));
 
             var app = builder.Build();
 
@@ -40,6 +43,7 @@ namespace Tutorials.Api
             app.MapControllers();
 
             app.Run();
+            app.MapControllers();
         }
     }
 }
