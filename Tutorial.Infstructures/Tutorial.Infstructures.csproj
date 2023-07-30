@@ -10,9 +10,4 @@
     <ProjectReference Include="..\Tutorials.Data\Tutorials.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
 </Project>

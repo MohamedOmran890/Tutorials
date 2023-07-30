@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Tutorial.Infstructures.Interfaces;
+using Tutorial.Infstructures.Repository;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Data.Context;
 
@@ -19,6 +21,7 @@ namespace Tutorials.Api
             builder.Services.AddDbContext<TutorialDbContext>(Options => Options
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 
             var app = builder.Build();
 

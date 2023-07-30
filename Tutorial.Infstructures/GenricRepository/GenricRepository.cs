@@ -35,8 +35,6 @@ namespace Tutorial.Infstructures.GenricRepository
              _tutorialDbContext.Set<T>().Update(NewObj);
             _tutorialDbContext.SaveChanges();
             return NewObj;
-
-            
         }
         public async Task<T?> Create(T NewObj)
         {
@@ -49,10 +47,10 @@ namespace Tutorial.Infstructures.GenricRepository
         {
             var Obj = await GetById(Id);
 
-             if(Obj is not null)
-             _tutorialDbContext.Set<T>().Remove(Obj);
+            if (Obj is not null)
+                _tutorialDbContext.Set<T>().Remove(Obj);
             _tutorialDbContext.SaveChanges();
-             return null;
+            return null;
 
         }
 
