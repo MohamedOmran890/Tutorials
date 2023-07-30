@@ -9,7 +9,7 @@ namespace Tutorial.Infstructures.Interfaces
 {
     public interface ITeacherRepository:IGenricRepository<Teacher>
     {
-        public Task<IEnumerable<Teacher>> GetByName(string Name);
+        //public Task<IEnumerable<Teacher>> GetByName(string Name);
         public Task<IEnumerable<Teacher>> GetTeacherByCity(string Name);
         public Task<IEnumerable<Teacher>> GetTeacherByRegion(string Name);
 

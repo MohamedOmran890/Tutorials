@@ -20,10 +20,10 @@ namespace Tutorial.Infstructures.Repository
             _tutorialDbContext = tutorialDbContext;
         }
 
-        public async Task<IEnumerable<Teacher>> GetByName(string Name)
-        {
-            return await _tutorialDbContext.Teachers.Where(N=>N.FirstName.Contains(Name)||N.LastName.Contains(Name)).ToListAsync();
-        }
+        //public async Task<IEnumerable<Teacher>> GetByName(string Name)
+        //{
+        //    return await _tutorialDbContext.Teachers.Where(N=>N.FirstName.Contains(Name)||N.LastName.Contains(Name)).ToListAsync();
+        //}
 
         public async Task<IEnumerable<Teacher>> GetTeacherByCity(string City)
         {
