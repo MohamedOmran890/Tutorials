@@ -24,10 +24,11 @@ namespace Tutorials.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
 
-            var techers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
-            if (techers == null)
+            //var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
+            var teachers =await _unitOfWork.teachers.GetList();
+            if (teachers == null)
                 return NotFound();
-            return Ok(techers);
+            return Ok(teachers);
         }
         [HttpGet("{Id:int}")]
         public async Task<IActionResult> GtById(int Id)
