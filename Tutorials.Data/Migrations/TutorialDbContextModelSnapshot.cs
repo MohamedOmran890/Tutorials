@@ -155,21 +155,6 @@ namespace Tutorials.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RoomStudent", b =>
-                {
-                    b.Property<int>("RoomsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("studentsStudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoomsId", "studentsStudentId");
-
-                    b.HasIndex("studentsStudentId");
-
-                    b.ToTable("RoomStudent");
-                });
-
             modelBuilder.Entity("Tutorials.Data.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -291,6 +276,21 @@ namespace Tutorials.Data.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("Tutorials.Data.Entities.RoomStudent", b =>
+                {
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("RoomStudents");
+                });
+
             modelBuilder.Entity("Tutorials.Data.Entities.Student", b =>
                 {
                     b.Property<int>("StudentId")
@@ -336,6 +336,21 @@ namespace Tutorials.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("Tutorials.Data.Entities.SubjectTeacher", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeacherId", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Teacher_Subjects");
                 });
 
             modelBuilder.Entity("Tutorials.Data.Entities.Teacher", b =>
@@ -517,21 +532,6 @@ namespace Tutorials.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RoomStudent", b =>
-                {
-                    b.HasOne("Tutorials.Data.Entities.Room", null)
-                        .WithMany()
-                        .HasForeignKey("RoomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tutorials.Data.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("studentsStudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Tutorials.Data.Entities.Center", b =>
                 {
                     b.HasOne("Tutorials.Data.Entities.Address", "Address")
@@ -581,6 +581,25 @@ namespace Tutorials.Data.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("Tutorials.Data.Entities.RoomStudent", b =>
+                {
+                    b.HasOne("Tutorials.Data.Entities.Room", "Room")
+                        .WithMany("RoomStudents")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tutorials.Data.Entities.Student", "Student")
+                        .WithMany("RoomStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Tutorials.Data.Entities.Student", b =>
                 {
                     b.HasOne("Tutorials.Data.Entities.Address", "Address")
@@ -602,6 +621,25 @@ namespace Tutorials.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tutorials.Data.Entities.SubjectTeacher", b =>
+                {
+                    b.HasOne("Tutorials.Data.Entities.Subject", "Subject")
+                        .WithMany("SubjectTeachers")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tutorials.Data.Entities.Teacher", "Teacher")
+                        .WithMany("SubjectTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Tutorials.Data.Entities.Teacher", b =>
@@ -653,12 +691,24 @@ namespace Tutorials.Data.Migrations
                     b.Navigation("Students");
                 });
 
+            modelBuilder.Entity("Tutorials.Data.Entities.Room", b =>
+                {
+                    b.Navigation("RoomStudents");
+                });
+
+            modelBuilder.Entity("Tutorials.Data.Entities.Student", b =>
+                {
+                    b.Navigation("RoomStudents");
+                });
+
             modelBuilder.Entity("Tutorials.Data.Entities.Subject", b =>
                 {
                     b.Navigation("Level")
                         .IsRequired();
 
                     b.Navigation("Rooms");
+
+                    b.Navigation("SubjectTeachers");
                 });
 
             modelBuilder.Entity("Tutorials.Data.Entities.Teacher", b =>
@@ -666,6 +716,8 @@ namespace Tutorials.Data.Migrations
                     b.Navigation("Rooms");
 
                     b.Navigation("Secretary");
+
+                    b.Navigation("SubjectTeachers");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,8 @@ using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Data.Context;
 using AutoMapper;
 using Tutorials.Api.Mapper;
-
+using Microsoft.AspNetCore.Identity;
+using Tutorials.Data.Entities;
 
 namespace Tutorials.Api
 {
@@ -22,8 +23,11 @@ namespace Tutorials.Api
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<TutorialDbContext>(Options => Options
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
+            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>()
+                .AddDefaultTokenProviders();
+            builder.Services.AddScoped<UserManager<User>, UserManager<User>>();
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
+            //builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
             builder.Services.AddAutoMapper(typeof(UserProfile));
 
             var app = builder.Build();

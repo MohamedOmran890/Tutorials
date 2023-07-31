@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Tutorial.Infstructures.Interfaces;
+using Tutorial.Infstructures.UnitOfWorks;
+using Tutorials.Api.DTO;
 
 namespace Tutorials.Api.Controllers
 {
@@ -9,16 +12,18 @@ namespace Tutorials.Api.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        private readonly ITeacherRepository _teacherRepository;
-
-        public TeacherController(ITeacherRepository teacherRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        public TeacherController(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _teacherRepository = teacherRepository;
+           _unitOfWork=unitOfWork;
+            _mapper=mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var techers = await _teacherRepository.GetList();
+
+            var techers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
             if (techers == null)
                 return NotFound();
             return Ok(techers);
@@ -26,23 +31,23 @@ namespace Tutorials.Api.Controllers
         [HttpGet("{Id:int}")]
         public async Task<IActionResult> GtById(int Id)
         {
-            var teacher=await _teacherRepository.GetById(Id);
+            var teacher=await _unitOfWork.teachers.GetById(Id);
             if (teacher == null)
                 return  NotFound();
             return Ok(teacher);
         }
-        //[HttpGet("GetByName")]
-        //public async Task<IActionResult> GetByName([FromQuery] string Name)
-        //{
-        //    var teachers = await _teacherRepository.GetByName(Name);
-        //    if (teachers == null)
-        //        return NotFound();
-        //    return Ok(teachers);
-        //}
+        [HttpGet("GetByName")]
+        public async Task<IActionResult> GetByName([FromQuery] string Name)
+        {
+            var teachers = await _unitOfWork.teachers.GetByName(Name);
+            if (teachers == null)
+                return NotFound();
+            return Ok(teachers);
+        }
         [HttpGet("GetTeacherByCity")]
         public async Task<IActionResult> GetTeacherByCity([FromQuery]string City)
         {
-            var teachers = await _teacherRepository.GetTeacherByCity(City);
+            var teachers = await _unitOfWork.teachers.GetTeacherByCity(City);
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -51,7 +56,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet("GetTeacherByRegion")]
         public async Task<IActionResult> GetTeacherByRegion([FromQuery] string Region)
         {
-            var teachers = await _teacherRepository.GetTeacherByCity(Region);
+            var teachers = await _unitOfWork.teachers.GetTeacherByCity(Region);
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -59,7 +64,7 @@ namespace Tutorials.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int Id)
         {
-            var teacher=await _teacherRepository.DeleteById(Id);
+            var teacher=await _unitOfWork.teachers.DeleteById(Id);
             if (teacher == null)
                 return NotFound();
             return Ok(teacher);

@@ -300,29 +300,7 @@ namespace Tutorials.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RoomStudent",
-                columns: table => new
-                {
-                    RoomsId = table.Column<int>(type: "int", nullable: false),
-                    studentsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomStudent", x => new { x.RoomsId, x.studentsId });
-                    table.ForeignKey(
-                        name: "FK_RoomStudent_AspNetUsers_studentsId",
-                        column: x => x.studentsId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RoomStudent_Rooms_RoomsId",
-                        column: x => x.RoomsId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+           
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
