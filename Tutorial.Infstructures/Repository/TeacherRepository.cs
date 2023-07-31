@@ -22,7 +22,7 @@ namespace Tutorial.Infstructures.Repository
 
         public async Task<IEnumerable<Teacher>> GetByName(string Name)
         {
-            return await _tutorialDbContext.Teachers.Where(N=>N.FirstName.Contains(Name)||N.LastName.Contains(Name)).ToListAsync();
+            return await _tutorialDbContext.Teachers.Where(N => N.User.FirstName.Contains(Name) || N.User.LastName.Contains(Name)).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetTeacherByCity(string City)

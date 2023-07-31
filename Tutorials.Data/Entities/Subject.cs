@@ -14,12 +14,15 @@ namespace Tutorials.Data.Entities
             Level = new Level();
 
             Rooms=new List<Room>();
+            SubjectTeachers = new List<SubjectTeacher>();
 
         }
        public int Id { get; set; }
        public string Name { get; set; }
-       public Level Level { get; set; }
-        public ICollection<Room> Rooms { get; set; }
+       public virtual Level Level { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<SubjectTeacher> SubjectTeachers { get; set; }
+        
 
 
     }

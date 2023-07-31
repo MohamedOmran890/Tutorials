@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 
 namespace Tutorials.Data.Entities
 {
-    public class Student:User
+    public class Student
     {
         public Student()
         {
             Address = new Address();
-            Rooms = new List<Room>();
+            RoomStudents = new List<RoomStudent>();
 
         }
-        public int Id { get; set; }
+        public int StudentId { get; set; }
 
         public int AddressId { get; set; }
-        public Address Address { get; set; }
-        public ICollection<Room> Rooms { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual ICollection<RoomStudent> RoomStudents { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
+
     }
 }
