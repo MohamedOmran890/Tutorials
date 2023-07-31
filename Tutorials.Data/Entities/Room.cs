@@ -13,6 +13,7 @@ namespace Tutorials.Data.Entities
             Teacher=new Teacher();
             RoomStudents = new List<RoomStudent>();
             Subject=new Subject();
+            Level=new Level();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -34,6 +35,8 @@ namespace Tutorials.Data.Entities
 
         public int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
+        public int LevelId { get; set; }
+        public virtual Level Level { get; set; }
 
 
         

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Xml.Linq;
 using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Api.DTO;
@@ -31,7 +32,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet("{Id:int}")]
         public async Task<IActionResult> GtById(int Id)
         {
-            var teacher=await _unitOfWork.teachers.GetById(Id);
+            var teacher=_mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetById(Id));
             if (teacher == null)
                 return  NotFound();
             return Ok(teacher);
@@ -39,7 +40,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName([FromQuery] string Name)
         {
-            var teachers = await _unitOfWork.teachers.GetByName(Name);
+            var teachers = _mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetByName(Name));
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -47,7 +48,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet("GetTeacherByCity")]
         public async Task<IActionResult> GetTeacherByCity([FromQuery]string City)
         {
-            var teachers = await _unitOfWork.teachers.GetTeacherByCity(City);
+            var teachers = _mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetTeacherByCity(City));
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -56,7 +57,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet("GetTeacherByRegion")]
         public async Task<IActionResult> GetTeacherByRegion([FromQuery] string Region)
         {
-            var teachers = await _unitOfWork.teachers.GetTeacherByCity(Region);
+            var teachers = _mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetTeacherByCity(Region));
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);

@@ -17,6 +17,9 @@ namespace Tutorial.Infstructures.UnitOfWorks
         public IGenricRepository<Student> Students { get; private set; }
         public ITeacherRepository teachers { get; private set; }
         public ISubjectRepository Subjects { get; private set; }
+        public ILevelRepository Level { get; private set; }
+
+        public IRoomRepository Room { get; private set; }
 
         public UnitOfWork(TutorialDbContext tutorialDbContext)
         {
@@ -24,6 +27,8 @@ namespace Tutorial.Infstructures.UnitOfWorks
             Students = new GenricRepository<Student>(_tutorialDbContext);
             teachers = new  TeacherRepository(_tutorialDbContext);
             Subjects = new  SubjectRepository(_tutorialDbContext);
+            Room= new RoomRepository(_tutorialDbContext);
+            Level = new LevelRepository(_tutorialDbContext);
 
         }
         public int Complete()
