@@ -18,8 +18,12 @@ namespace Tutorials.Api
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddCors(option => option
+            .AddDefaultPolicy(build => build.AllowAnyOrigin()
+            .AllowAnyMethod().AllowAnyHeader()));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddDbContext<TutorialDbContext>(Options => Options
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -34,8 +38,11 @@ namespace Tutorials.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors();
+            app.UseRouting();
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

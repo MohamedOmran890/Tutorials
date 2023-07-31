@@ -32,7 +32,7 @@ namespace Tutorial.Infstructures.UnitOfWorks
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _tutorialDbContext.Dispose() ;
         }
     }
 }
