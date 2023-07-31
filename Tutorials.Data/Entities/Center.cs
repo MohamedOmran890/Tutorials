@@ -14,9 +14,9 @@ namespace Tutorials.Data.Entities
         [StringLength(250)]
         public string Name { get; set; }
         public int AddressId { get; set; }
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
-        public ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
 
     }
 }

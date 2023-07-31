@@ -10,8 +10,9 @@ namespace Tutorial.Infstructures.UnitOfWorks
 {
     public interface IUnitOfWork:IDisposable
     {
-        //IGenricRepository<Student> Students { get; }
-        //IGenricRepository<Teacher> teachers { get; }
+        ITeacherRepository teachers { get; }
+        ISubjectRepository Subjects { get; }
+        IGenricRepository<Student> Students { get; }
         int Complete();
     }
 }

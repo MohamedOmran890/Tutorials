@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Tutorials.Data.Entities
 {
-    internal class RoomStudent
+    public class RoomStudent
     {
-        public int Id { get; set; } 
         public int StudentId { get; set; }
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
         public int RoomId { get; set; }
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

@@ -13,16 +13,16 @@ namespace Tutorials.Data.Entities
         public Student()
         {
             Address = new Address();
-            Rooms = new List<Room>();
+            RoomStudents = new List<RoomStudent>();
 
         }
         public int StudentId { get; set; }
 
         public int AddressId { get; set; }
-        public Address Address { get; set; }
-        public ICollection<Room> Rooms { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual ICollection<RoomStudent> RoomStudents { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
     }
 }

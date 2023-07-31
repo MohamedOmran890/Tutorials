@@ -25,8 +25,6 @@ namespace Tutorial.Infstructures.GenricRepository
         public async Task<List<T?>> GetList()
         {
             return await _tutorialDbContext.Set<T>().ToListAsync();
-
-            throw new NotImplementedException();
         }
 
         public  T? Update(int Id, T NewObj)
