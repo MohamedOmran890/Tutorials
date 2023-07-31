@@ -13,5 +13,6 @@
         public virtual Subject Subject { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }
