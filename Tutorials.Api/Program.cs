@@ -22,7 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Any;
-
+using Microsoft.AspNetCore.Identity;
+using Tutorials.Data.Entities;
 
 namespace Tutorials.Api
 {
@@ -43,8 +44,11 @@ namespace Tutorials.Api
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<TutorialDbContext>(Options => Options
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
+            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>()
+                .AddDefaultTokenProviders();
+            builder.Services.AddScoped<UserManager<User>, UserManager<User>>();
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
+            //builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
             builder.Services.AddAutoMapper(typeof(UserProfile));
             builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>();
             builder.Services.AddAuthentication(options =>

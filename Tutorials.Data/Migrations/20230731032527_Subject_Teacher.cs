@@ -4,10 +4,11 @@
 
 namespace Tutorials.Data.Migrations
 {
-    public partial class User : Migration
+    public partial class Subject_Teacher : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
             migrationBuilder.DropForeignKey(
                 name: "FK_AspNetUsers_Addresses_AddressId",
                 table: "AspNetUsers");
@@ -28,17 +29,8 @@ namespace Tutorials.Data.Migrations
                 name: "FK_Rooms_AspNetUsers_TeacherId1",
                 table: "Rooms");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_RoomStudent_AspNetUsers_studentsId",
-                table: "RoomStudent");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_RoomStudent",
-                table: "RoomStudent");
-
-            migrationBuilder.DropIndex(
-                name: "IX_RoomStudent_studentsId",
-                table: "RoomStudent");
+            migrationBuilder.DropTable(
+                name: "RoomStudent");
 
             migrationBuilder.DropIndex(
                 name: "IX_Rooms_TeacherId1",
@@ -59,10 +51,6 @@ namespace Tutorials.Data.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_AspNetUsers_TeacherId1",
                 table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "studentsId",
-                table: "RoomStudent");
 
             migrationBuilder.DropColumn(
                 name: "TeacherId1",
@@ -95,18 +83,6 @@ namespace Tutorials.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "TeacherId1",
                 table: "AspNetUsers");
-
-            migrationBuilder.AddColumn<int>(
-                name: "studentsStudentId",
-                table: "RoomStudent",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_RoomStudent",
-                table: "RoomStudent",
-                columns: new[] { "RoomsId", "studentsStudentId" });
 
             migrationBuilder.CreateTable(
                 name: "Students",
@@ -167,10 +143,53 @@ namespace Tutorials.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RoomStudent_studentsStudentId",
-                table: "RoomStudent",
-                column: "studentsStudentId");
+            migrationBuilder.CreateTable(
+                name: "RoomStudents",
+                columns: table => new
+                {
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomStudents", x => new { x.RoomId, x.StudentId });
+                    table.ForeignKey(
+                        name: "FK_RoomStudents_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RoomStudents_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teacher_Subjects",
+                columns: table => new
+                {
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teacher_Subjects", x => new { x.TeacherId, x.SubjectId });
+                    table.ForeignKey(
+                        name: "FK_Teacher_Subjects_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Teacher_Subjects_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "TeacherId",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_TeacherId",
@@ -181,6 +200,11 @@ namespace Tutorials.Data.Migrations
                 name: "IX_AspNetUsers_TeacherId",
                 table: "AspNetUsers",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomStudents_StudentId",
+                table: "RoomStudents",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_AddressId",
@@ -197,6 +221,11 @@ namespace Tutorials.Data.Migrations
                 name: "IX_Students_UserId",
                 table: "Students",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teacher_Subjects_SubjectId",
+                table: "Teacher_Subjects",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_AddressId",
@@ -223,14 +252,6 @@ namespace Tutorials.Data.Migrations
                 principalTable: "Teachers",
                 principalColumn: "TeacherId",
                 onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_RoomStudent_Students_studentsStudentId",
-                table: "RoomStudent",
-                column: "studentsStudentId",
-                principalTable: "Students",
-                principalColumn: "StudentId",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -243,23 +264,17 @@ namespace Tutorials.Data.Migrations
                 name: "FK_Rooms_Teachers_TeacherId",
                 table: "Rooms");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_RoomStudent_Students_studentsStudentId",
-                table: "RoomStudent");
+            migrationBuilder.DropTable(
+                name: "RoomStudents");
+
+            migrationBuilder.DropTable(
+                name: "Teacher_Subjects");
 
             migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Teachers");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_RoomStudent",
-                table: "RoomStudent");
-
-            migrationBuilder.DropIndex(
-                name: "IX_RoomStudent_studentsStudentId",
-                table: "RoomStudent");
 
             migrationBuilder.DropIndex(
                 name: "IX_Rooms_TeacherId",
@@ -268,17 +283,6 @@ namespace Tutorials.Data.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_AspNetUsers_TeacherId",
                 table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "studentsStudentId",
-                table: "RoomStudent");
-
-            migrationBuilder.AddColumn<string>(
-                name: "studentsId",
-                table: "RoomStudent",
-                type: "nvarchar(450)",
-                nullable: false,
-                defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
                 name: "TeacherId1",
@@ -329,15 +333,29 @@ namespace Tutorials.Data.Migrations
                 type: "nvarchar(450)",
                 nullable: true);
 
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_RoomStudent",
-                table: "RoomStudent",
-                columns: new[] { "RoomsId", "studentsId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoomStudent_studentsId",
-                table: "RoomStudent",
-                column: "studentsId");
+            migrationBuilder.CreateTable(
+                name: "RoomStudent",
+                columns: table => new
+                {
+                    RoomsId = table.Column<int>(type: "int", nullable: false),
+                    studentsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomStudent", x => new { x.RoomsId, x.studentsId });
+                    table.ForeignKey(
+                        name: "FK_RoomStudent_AspNetUsers_studentsId",
+                        column: x => x.studentsId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RoomStudent_Rooms_RoomsId",
+                        column: x => x.RoomsId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_TeacherId1",
@@ -365,6 +383,11 @@ namespace Tutorials.Data.Migrations
                 name: "IX_AspNetUsers_TeacherId1",
                 table: "AspNetUsers",
                 column: "TeacherId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomStudent_studentsId",
+                table: "RoomStudent",
+                column: "studentsId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Addresses_AddressId",
@@ -401,14 +424,6 @@ namespace Tutorials.Data.Migrations
                 name: "FK_Rooms_AspNetUsers_TeacherId1",
                 table: "Rooms",
                 column: "TeacherId1",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_RoomStudent_AspNetUsers_studentsId",
-                table: "RoomStudent",
-                column: "studentsId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);

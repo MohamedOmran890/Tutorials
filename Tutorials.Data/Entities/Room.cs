@@ -11,7 +11,7 @@ namespace Tutorials.Data.Entities
         {
             Center=new Center();
             Teacher=new Teacher();
-            students = new List<Student>();
+            RoomStudents = new List<RoomStudent>();
             Subject=new Subject();
         }
         public int Id { get; set; }
@@ -26,14 +26,14 @@ namespace Tutorials.Data.Entities
         
         public DayRoom DayOfWeeks { get; set; }
         public int CenterId { get; set; }
-        public Center Center { get; set; }
+        public virtual Center Center { get; set; }
         public int TeacherId { get; set; }
 
-        public Teacher Teacher { get; set; }
-        public ICollection<Student> students { get; set; }
+        public virtual Teacher Teacher { get; set; }
+        public virtual ICollection<RoomStudent> RoomStudents { get; set; }
 
         public int SubjectId { get; set; }
-        public Subject Subject { get; set; }
+        public virtual Subject Subject { get; set; }
 
 
         
