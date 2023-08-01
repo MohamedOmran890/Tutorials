@@ -243,6 +243,9 @@ namespace Tutorials.Data.Migrations
                     b.Property<double>("Duration")
                         .HasColumnType("float");
 
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -268,6 +271,8 @@ namespace Tutorials.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CenterId");
+
+                    b.HasIndex("LevelId");
 
                     b.HasIndex("SubjectId");
 
@@ -562,6 +567,12 @@ namespace Tutorials.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tutorials.Data.Entities.Level", "Level")
+                        .WithMany("Rooms")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Tutorials.Data.Entities.Subject", "Subject")
                         .WithMany("Rooms")
                         .HasForeignKey("SubjectId")
@@ -575,6 +586,8 @@ namespace Tutorials.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Center");
+
+                    b.Navigation("Level");
 
                     b.Navigation("Subject");
 
@@ -688,6 +701,8 @@ namespace Tutorials.Data.Migrations
 
             modelBuilder.Entity("Tutorials.Data.Entities.Level", b =>
                 {
+                    b.Navigation("Rooms");
+
                     b.Navigation("Students");
                 });
 

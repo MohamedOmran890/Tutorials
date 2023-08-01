@@ -28,14 +28,14 @@ namespace Tutorials.Api.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
 
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-    
+
         public AccountController(UserManager<User> userManager, IMapper mapper, IConfiguration configuration)
         {
             _userManager = userManager;

@@ -20,7 +20,10 @@ namespace Tutorials.Data.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+
             builder.Entity<RoomStudent>().HasKey(k => new { k.RoomId,k.StudentId});
+            
             builder.Entity<RoomStudent>()
        .HasOne(e => e.Room)
        .WithMany(s => s.RoomStudents)

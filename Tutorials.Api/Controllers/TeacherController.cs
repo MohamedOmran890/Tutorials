@@ -31,7 +31,7 @@ namespace Tutorials.Api.Controllers
             return Ok(teachers);
         }
         [HttpGet("{Id:int}")]
-        public async Task<IActionResult> GtById(int Id)
+        public async Task<IActionResult> GetById(int Id)
         {
             var teacher=_mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetById(Id));
             if (teacher == null)
