@@ -11,8 +11,10 @@ using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.UnitOfWorks
 {
-    public class UnitOfWork : IUnitOfWork 
+    public class UnitOfWork : IUnitOfWork
     {
+
+
         private readonly TutorialDbContext _tutorialDbContext;
         public IGenricRepository<Student> Students { get; private set; }
         public ITeacherRepository teachers { get; private set; }
@@ -21,14 +23,16 @@ namespace Tutorial.Infstructures.UnitOfWorks
 
         public IRoomRepository Room { get; private set; }
 
+        public ISubjectTeacherRepository SubjectsTeacher { get; private set; }
+
         public UnitOfWork(TutorialDbContext tutorialDbContext)
         {
             _tutorialDbContext = tutorialDbContext;
             Students = new GenricRepository<Student>(_tutorialDbContext);
-            teachers = new  TeacherRepository(_tutorialDbContext);
-            Subjects = new  SubjectRepository(_tutorialDbContext);
-            Room= new RoomRepository(_tutorialDbContext);
-            Level = new LevelRepository(_tutorialDbContext);
+            teachers = new TeacherRepository(_tutorialDbContext);
+            Subjects = new SubjectRepository(_tutorialDbContext);
+            Room = new RoomRepository(_tutorialDbContext);
+            SubjectsTeacher = new SubjectTeacherRepository(_tutorialDbContext);
 
         }
         public int Complete()
@@ -38,7 +42,7 @@ namespace Tutorial.Infstructures.UnitOfWorks
 
         public void Dispose()
         {
-            _tutorialDbContext.Dispose() ;
+            _tutorialDbContext.Dispose();
         }
     }
 }
