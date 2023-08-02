@@ -7,16 +7,21 @@ using Tutorial.Infstructures.GenricRepository;
 using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
 using Tutorials.Data.Entities;
+using Microsoft.EntityFrameworkCore;        
 
 namespace Tutorial.Infstructures.Repository
 {
     internal class LevelRepository : GenricRepository<Level>, ILevelRepository
     {
         private readonly TutorialDbContext _tutorialDbContext;
+
         public LevelRepository(TutorialDbContext tutorialDbContext) : base(tutorialDbContext)
         {
             _tutorialDbContext = tutorialDbContext;
+    
         }
-
+    
+       
     }
+
 }

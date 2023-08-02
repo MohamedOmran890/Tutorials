@@ -7,8 +7,8 @@ using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.Interfaces
 {
-    public interface ISubjectRepository:IGenricRepository<Subject>
+    public interface ISubjectRepository : IGenricRepository<Subject>
     {
-        public Task<IEnumerable<Subject>> GetSubjectByTeacher(int TeacherId);
+
     }
 }

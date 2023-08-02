@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorials.Api.DTO;
+using Tutorials.Data.Context ;
 
 namespace Tutorials.Api.Controllers
 {
@@ -15,17 +16,18 @@ namespace Tutorials.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public TeacherController(IUnitOfWork unitOfWork,IMapper mapper)
+
+
+        public TeacherController(IUnitOfWork unitOfWork,IMapper mapper )
         {
            _unitOfWork=unitOfWork;
             _mapper=mapper;
+            
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-
-            //var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
-            var teachers =await _unitOfWork.teachers.GetList();
+        var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -64,6 +66,8 @@ namespace Tutorials.Api.Controllers
             return Ok(teachers);
         }
         [HttpDelete]
+
+        
         public async Task<IActionResult> Delete(int Id)
         {
             var teacher=await _unitOfWork.teachers.DeleteById(Id);
@@ -72,6 +76,8 @@ namespace Tutorials.Api.Controllers
             return Ok(teacher);
 
         }
+
+        
 
     }
 }

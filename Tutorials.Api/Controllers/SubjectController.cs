@@ -21,7 +21,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSubjectByTeacher(int TeacherId)
         {
-            var subjects= await _unitOfWork.Subjects.GetSubjectByTeacher(TeacherId);
+            var subjects= await _unitOfWork.SubjectsTeacher.GetSubjectByTeacher(TeacherId);
 
             return Ok(subjects);
         }

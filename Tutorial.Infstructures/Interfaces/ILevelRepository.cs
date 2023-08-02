@@ -7,8 +7,10 @@ using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.Interfaces
 {
-    public interface ILevelRepository:IGenricRepository<Level>
+    public interface ILevelRepository : IGenricRepository<Level>
     {
+
+
 
     }
 }

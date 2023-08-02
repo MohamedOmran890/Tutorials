@@ -11,7 +11,7 @@ using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.Repository
 {
-    internal class SubjectRepository : GenricRepository<Subject>, ISubjectRepository
+    public class SubjectRepository : GenricRepository<Subject>, ISubjectRepository
     {
         private readonly TutorialDbContext _tutorialDbContext;
 
@@ -20,9 +20,6 @@ namespace Tutorial.Infstructures.Repository
             _tutorialDbContext = tutorialDbContext;
         }
 
-        public async Task<IEnumerable<Subject>> GetSubjectByTeacher(int TeacherId)
-        {
-            return await _tutorialDbContext.Teacher_Subjects.Where(s => s.TeacherId==TeacherId).Select(s=>s.Subject).ToListAsync();
-        }
-}
+
+    }
 }
