@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Tutorial.Infstructures.UnitOfWorks;
+using Tutorial.Infstructures.UnitOfWorks; 
+using AutoMapper ;
+using Tutorials.Api.DTO ;
 
 namespace Tutorials.Api.Controllers
 {
@@ -9,31 +11,43 @@ namespace Tutorials.Api.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public RoomController(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public RoomController(IUnitOfWork unitOfWork , IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-        
+            _mapper = mapper;
         }
-        [HttpGet("{LevelId}")]
-        public IActionResult GetRoomByLevel(int LevelId)
+        [HttpGet("GetRoomBylevel/{LevelId:int}")]
+        public async Task<IActionResult> GetRoomByLevel(int LevelId)
         {
-            var rooms=_unitOfWork.Room.GetRoomByLevelId(LevelId);
+            var rooms=_mapper.Map<List<RoomDTO>>(await  _unitOfWork.Room.GetRoomByLevelId(LevelId)) ;
             if (rooms == null)
                 return BadRequest();
                 return Ok(rooms); 
         }
-        [HttpGet("{TeacherId}")]
-        public IActionResult GetRoomByTeacher(int TeacherId)
+        [HttpGet("GetRoomByTeacher/{TeacherId:int}")]
+        public async Task<IActionResult>GetRoomByTeacher(int TeacherId)
         {
-            var rooms = _unitOfWork.Room.GetRoomByTeacher(TeacherId);
+            var rooms = _mapper.Map<List<RoomDTO>> (await _unitOfWork.Room.GetRoomByTeacher(TeacherId));
             if (rooms == null)
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpGet("{SubjectId}")]
-        public IActionResult GetRoomBySubject(int SubjectId)
+        [HttpGet("GetRoomBySubject/{SubjectId:int}")]
+        public async Task <IActionResult> GetRoomBySubject(int SubjectId)
         {
-            var rooms = _unitOfWork.Room.GetRoomBySubject(SubjectId);
+            var rooms = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetRoomBySubject(SubjectId));
+            if (rooms == null)
+                return BadRequest();
+            return Ok(rooms);
+        }
+        [HttpGet("GetRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+
+        public async Task<IActionResult> GetRoomBySubjectAndTeacherAndLevel (int SubjectId , int TeacherId , int LevelId)
+        {
+
+            var rooms =  _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetRoomByTeacherAndSubjecAndLevel(SubjectId , TeacherId , LevelId)) ;
             if (rooms == null)
                 return BadRequest();
             return Ok(rooms);

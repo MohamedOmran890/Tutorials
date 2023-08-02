@@ -51,8 +51,10 @@ namespace Tutorials.Api
 
             builder.Services.AddScoped<UserManager<User>, UserManager<User>>();
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-            //builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
-            builder.Services.AddAutoMapper(typeof(UserProfile));
+
+
+            builder.Services.AddAutoMapper(typeof(UserProfile) , typeof(TeacherProfile) , typeof(RoomProfile));
+
             builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>();
             builder.Services.AddAuthentication(options =>
             {
@@ -117,11 +119,9 @@ namespace Tutorials.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            //app.UseCors();
+            app.UseCors();
             app.UseRouting();
-           // app.UseHttpsRedirection();
-
-           //app.UseHttpsRedirection();
+             app.UseHttpsRedirection();
             app.UseAuthentication();
 
             app.UseAuthorization();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tutorials.Data.Entities.Enums
+namespace Tutorials.Data.Enums
 {
     public enum TypeRoom
     {

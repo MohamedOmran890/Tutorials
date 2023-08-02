@@ -9,9 +9,11 @@ namespace Tutorial.Infstructures.Interfaces
 {
     public interface IRoomRepository:IGenricRepository<Room>
     {
-        public IEnumerable<Room> GetRoomByLevelId(int LevelId);
+        public Task<IEnumerable<Room>> GetRoomByLevelId(int LevelId);
         public Task<IEnumerable<Room>> GetRoomByTeacher(int TeacherId);
         public Task<IEnumerable<Room>> GetRoomBySubject(int SubjectId);
+        public Task<IEnumerable<Room>> GetRoomByTeacherAndSubjecAndLevel(int SubjectId, int TeacherId, int LevelId);
+
 
     }
 }

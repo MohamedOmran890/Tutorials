@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Timers;
-using Tutorials.Data.Entities.Enums;
+using Tutorials.Data.Enums;
 using Tutorials.Data.Enums;
 
 namespace Tutorials.Data.Entities

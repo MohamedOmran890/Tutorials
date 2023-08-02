@@ -19,9 +19,9 @@ namespace Tutorial.Infstructures.Repository
             _tutorialDbContext = tutorialDbContext;
         }
 
-        public IEnumerable<Room> GetRoomByLevelId(int LevelId)
+        public async Task<IEnumerable<Room>> GetRoomByLevelId(int LevelId)
         {
-            return _tutorialDbContext.Rooms.Where(r => r.LevelId == LevelId).ToList();
+            return await _tutorialDbContext.Rooms.Where(r => r.LevelId == LevelId).ToListAsync();
         }
         
         public async Task<IEnumerable<Room>> GetRoomByTeacher(int TeacherId)
@@ -33,6 +33,11 @@ namespace Tutorial.Infstructures.Repository
         {
             return await _tutorialDbContext.Rooms.Where(r=>r.SubjectId==SubjectId).ToListAsync();
 
+        }
+
+        public  async Task<IEnumerable<Room>> GetRoomByTeacherAndSubjecAndLevel(int SubjectId , int TeacherId , int LevelId )
+        {
+            return await _tutorialDbContext.Rooms.Where(r=>r.SubjectId ==SubjectId&& r.TeacherId ==TeacherId && r.LevelId==LevelId).ToListAsync();
         }
 
     }
