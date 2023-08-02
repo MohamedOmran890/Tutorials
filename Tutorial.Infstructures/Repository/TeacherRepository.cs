@@ -22,17 +22,17 @@ namespace Tutorial.Infstructures.Repository
 
         public async Task<IEnumerable<Teacher>> GetByName(string Name)
         {
-            return await _tutorialDbContext.Teachers.Where(N => N.User.FirstName.Contains(Name) || N.User.LastName.Contains(Name)).ToListAsync();
+            return await _tutorialDbContext.Teachers.AsNoTracking().Where(N => N.User.FirstName.Contains(Name) || N.User.LastName.Contains(Name)).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetTeacherByCity(string City)
         {
-            return await _tutorialDbContext.Teachers.Where(c => c.Address.City == City).ToListAsync();
+            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => c.Address.City == City).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetTeacherByRegion(string Region)
         {
-            return await _tutorialDbContext.Teachers.Where(c => c.Address.Region == Region).ToListAsync();
+            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => c.Address.Region == Region).ToListAsync();
         }
     }
 }

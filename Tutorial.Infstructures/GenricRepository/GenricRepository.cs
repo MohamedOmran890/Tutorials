@@ -24,7 +24,9 @@ namespace Tutorial.Infstructures.GenricRepository
 
         public async Task<List<T?>> GetList()
         {
-            return await _tutorialDbContext.Set<T>().ToListAsync();
+            return await _tutorialDbContext.Set<T>()
+            .AsNoTracking()
+            .ToListAsync();
         }
 
         public  T? Update(int Id, T NewObj)
