@@ -25,25 +25,30 @@ namespace Tutorials.Data.Context
             builder.Entity<RoomStudent>().HasKey(k => new { k.RoomId,k.StudentId});
             
             builder.Entity<RoomStudent>()
-       .HasOne(e => e.Room)
-       .WithMany(s => s.RoomStudents)
-       .HasForeignKey(e => e.RoomId);
+                .HasOne(e => e.Room)
+                .WithMany(s => s.RoomStudents)
+                .HasForeignKey(e => e.RoomId);
 
             builder.Entity<RoomStudent>()
                 .HasOne(e => e.Student)
                 .WithMany(c => c.RoomStudents)
                 .HasForeignKey(e => e.StudentId);
 
-            builder.Entity<SubjectTeacher>().HasKey(k => new { k.TeacherId,k.SubjectId});
+            builder.Entity<SubjectTeacher>().HasKey(k => new { k.TeacherId,k.SubjectId , k.LevelId});
+            
             builder.Entity<SubjectTeacher>()
-        .HasOne(e => e.Subject)
-        .WithMany(s => s.SubjectTeachers)
-        .HasForeignKey(e => e.SubjectId);
+                .HasOne(e => e.Subject)
+                .WithMany(s => s.SubjectTeachers)
+                .HasForeignKey(e => e.SubjectId);
 
             builder.Entity<SubjectTeacher>()
                 .HasOne(e => e.Teacher)
                 .WithMany(c => c.SubjectTeachers)
                 .HasForeignKey(e => e.TeacherId);
+            builder.Entity<SubjectTeacher>()
+                .HasOne(e => e.Level)
+                .WithMany(c => c.SubjectTeachers)
+                .HasForeignKey(e => e.LevelId);
 
         }
         public DbSet<Address> Addresses { get; set; }

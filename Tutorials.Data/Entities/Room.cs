@@ -9,11 +9,8 @@ namespace Tutorials.Data.Entities
     {
         public Room()
         {
-            Center=new Center();
-            Teacher=new Teacher();
-            RoomStudents = new List<RoomStudent>();
-            Subject=new Subject();
-            Level=new Level();
+            
+            
         }
         public int Id { get; set; }
         public string Name { get; set; }

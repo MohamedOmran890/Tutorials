@@ -4,7 +4,7 @@
     {
         public Secretary()
         {
-            Teacher = new Teacher();
+            
         }
         public int Id { get; set; }
 

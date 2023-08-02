@@ -10,17 +10,12 @@ namespace Tutorials.Data.Entities
 {
     public class Student
     {
-        public Student()
-        {
-            Address = new Address();
-            RoomStudents = new List<RoomStudent>();
-
-        }
+        
         public int StudentId { get; set; }
 
         public int AddressId { get; set; }
-        public virtual Address Address { get; set; }
-        public virtual ICollection<RoomStudent> RoomStudents { get; set; }
+        public virtual Address Address { get; set; } 
+        public virtual ICollection<RoomStudent> RoomStudents { get; set; } 
         public string UserId { get; set; }
         public virtual User User { get; set; }
 

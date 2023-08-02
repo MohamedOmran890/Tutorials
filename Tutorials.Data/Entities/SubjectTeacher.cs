@@ -12,5 +12,7 @@ namespace Tutorials.Data.Entities
         public virtual Teacher Teacher { get; set; }
         public  int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
+        public int LevelId {get; set;}
+        public Level Level {get; set;}
     }
 }

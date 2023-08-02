@@ -4,10 +4,7 @@
     {
         public Teacher()
         {
-            Rooms=new List<Room>();
-            Secretary=new List<Secretary>();
-            Address=new Address();
-            SubjectTeachers = new List<SubjectTeacher>();
+          
         }
         public int TeacherId { get; set; }
         public string Bio { get; set; }
@@ -18,6 +15,8 @@
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<SubjectTeacher> SubjectTeachers { get; set; }
+
+        
 
 
 

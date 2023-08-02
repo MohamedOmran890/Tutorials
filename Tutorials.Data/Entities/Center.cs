@@ -6,8 +6,7 @@ namespace Tutorials.Data.Entities
     {
         public Center()
         {
-            Address=new Address();
-            Rooms=new List<Room>();
+           
 
         }
         public int Id { get; set; }
