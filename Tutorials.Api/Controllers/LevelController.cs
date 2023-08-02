@@ -20,8 +20,8 @@ namespace Tutorials.Api.Controllers
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-
-        [HttpGet("GetlevelsSubject/{id :int }")]
+        
+        [HttpGet("{SubjectId:int}/{TeacherId:int}")]
         public async Task<IActionResult> GetLevelsByTeacherAndSubject (int SubjectId , int TeacherId)
         {
             var Levels = await unitOfWork.SubjectsTeacher.GetLevelsByTeacher_And_Subject(SubjectId ,TeacherId);
