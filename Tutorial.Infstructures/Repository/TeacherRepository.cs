@@ -8,6 +8,7 @@ using Tutorial.Infstructures.GenricRepository;
 using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
 using Tutorials.Data.Entities;
+using Tutorials.Data.Enums ;
 
 namespace Tutorial.Infstructures.Repository
 {
@@ -27,12 +28,29 @@ namespace Tutorial.Infstructures.Repository
 
         public async Task<IEnumerable<Teacher>> GetTeacherByCity(string City)
         {
-            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => c.Address.City == City).ToListAsync();
+            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => (int)c.Address.City == int.Parse(City)).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetTeacherByRegion(string Region)
         {
             return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => c.Address.Region == Region).ToListAsync();
+        }
+
+        public async Task<List<Teacher>> FilteringTeachersByCity (string CityID , string Name)
+        {
+            var teachers  = _tutorialDbContext.Teachers as IQueryable<Teacher>;
+            if (!string.IsNullOrWhiteSpace(CityID))
+            {
+                teachers = teachers.Where(i=>(int)i.Address.City ==  int.Parse(CityID));
+            }
+            
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                teachers = teachers.Where(i=>i.User.FirstName.Contains(Name )) ;
+
+            }
+            return await teachers.ToListAsync();
+
         }
     }
 }

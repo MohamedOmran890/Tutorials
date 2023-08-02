@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.IO;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -65,9 +66,9 @@ namespace Tutorials.Api.Controllers
                 return NotFound();
             return Ok(teachers);
         }
-        [HttpDelete]
 
-        
+
+        [HttpDelete]
         public async Task<IActionResult> Delete(int Id)
         {
             var teacher=await _unitOfWork.teachers.DeleteById(Id);
@@ -76,8 +77,19 @@ namespace Tutorials.Api.Controllers
             return Ok(teacher);
 
         }
-
+          [HttpGet("FilteringTeacher")]
+        public  async Task<IActionResult> FilteringTeachersByCity  ([FromQuery] string CityID ,[FromQuery]string Name)
+        {
+            if(string.IsNullOrWhiteSpace(CityID)&& string.IsNullOrWhiteSpace(Name))
+            {
+                return RedirectToAction("GetAll");
+            }
+         return  Ok (_mapper.Map<IEnumerable<TeacherCartDto>>(await _unitOfWork.teachers.FilteringTeachersByCity(CityID , Name))) ;
+            
+           
         
+
+        }
 
     }
 }

@@ -12,6 +12,8 @@ namespace Tutorial.Infstructures.Interfaces
         public Task<IEnumerable<Teacher>> GetByName(string Name);
         public Task<IEnumerable<Teacher>> GetTeacherByCity(string Name);
         public Task<IEnumerable<Teacher>> GetTeacherByRegion(string Name);
+        public Task<List<Teacher>> FilteringTeachersByCity(string CityID, string Name);
+
 
     }
 }

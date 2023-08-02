@@ -1,4 +1,6 @@
-﻿namespace Tutorials.Data.Entities
+﻿
+
+namespace Tutorials.Data.Entities
 {
     public class Teacher
     {

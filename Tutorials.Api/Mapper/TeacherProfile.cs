@@ -17,6 +17,8 @@ namespace Tutorials.Api.Mapper
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(s => s.User.Image))
                 .ReverseMap();
 
+            CreateMap<Teacher,TeacherCartDto>().ReverseMap();
+
         }
     }
 
