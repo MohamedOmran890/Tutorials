@@ -52,6 +52,16 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
+        
+        [HttpGet("GetLocationRooms/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+
+        public async  Task<IActionResult> GetLocationRooms (int SubjectId  , int TeacherId , int LevelId )
+        {
+            var rooms = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetLocationRooms(SubjectId, TeacherId, LevelId));
+            if (rooms == null)
+                return BadRequest();
+            return Ok(rooms);
+        }
 
 
 

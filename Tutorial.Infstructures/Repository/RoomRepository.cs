@@ -40,5 +40,13 @@ namespace Tutorial.Infstructures.Repository
             return await _tutorialDbContext.Rooms.Where(r=>r.SubjectId ==SubjectId&& r.TeacherId ==TeacherId && r.LevelId==LevelId).ToListAsync();
         }
 
+        public async Task<IEnumerable<string>> GetLocationRooms (int SubjectId , int TeacherId , int LevelId)
+        {
+            var rooms  = await GetRoomByTeacherAndSubjecAndLevel(SubjectId, TeacherId, LevelId);
+            var regions = rooms.Select(i => i.Center.Address.Region);
+
+            return await Task.FromResult(regions); ;
+        }
+
     }
 }

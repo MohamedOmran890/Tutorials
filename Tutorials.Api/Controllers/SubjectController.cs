@@ -7,6 +7,7 @@ namespace Tutorials.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class SubjectController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
