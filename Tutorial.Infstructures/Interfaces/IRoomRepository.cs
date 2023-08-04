@@ -13,7 +13,9 @@ namespace Tutorial.Infstructures.Interfaces
         public Task<IEnumerable<Room>> GetRoomByTeacher(int TeacherId);
         public Task<IEnumerable<Room>> GetRoomBySubject(int SubjectId);
         public Task<IEnumerable<Room>> GetRoomByTeacherAndSubjecAndLevel(int SubjectId, int TeacherId, int LevelId);
-        public  Task<IEnumerable<string>> GetLocationRooms(int SubjectId, int TeacherId, int LevelId);
+        public Task<IEnumerable<string>> GetLocationRooms(int SubjectId, int TeacherId, int LevelId);
+        public Task<IEnumerable<Room>> FilterRooms(List<Room> rooms, int typeRoom, List<int> days, string region, double price);
+
 
 
     }

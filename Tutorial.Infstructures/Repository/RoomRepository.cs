@@ -8,7 +8,7 @@ using Tutorial.Infstructures.GenricRepository;
 using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
 using Tutorials.Data.Entities;
-
+using Tutorials.Data.Enums; 
 namespace Tutorial.Infstructures.Repository
 {
     public class RoomRepository : GenricRepository<Room>, IRoomRepository
@@ -46,6 +46,40 @@ namespace Tutorial.Infstructures.Repository
             var regions = rooms.Select(i => i.Center.Address.Region);
 
             return await Task.FromResult(regions); ;
+        }
+               
+        public async Task<IEnumerable<Room>> FilterRooms (List<Room> rooms  , int typeRoom  , List<int> days  , string region ,double price ) 
+        {
+            // client server can send zero if user dosesn't select 
+             if (typeRoom != 0)
+             {
+                rooms = rooms.Where(room => (int) room.TypeRoom == typeRoom).ToList();
+             }
+             if (days  != null )
+             {
+                int All = 0;
+                foreach(int day in days )
+                {
+                    All =All |day  ;
+
+                }
+                // ?? why to list ??
+                rooms  =  rooms.Where(room=>((int)room.DayOfWeeks & All) != 0).ToList();
+
+             }
+             // query string
+             if (!string.IsNullOrWhiteSpace(region))
+             {
+                rooms =  rooms.Where(room=>room.Center.Address.Region== region).ToList();
+    
+
+             }
+             if (price != 0)
+             {
+                rooms = rooms.Where(room=>room.Price <= price ).ToList();
+             }
+             return  rooms ; 
+
         }
 
     }

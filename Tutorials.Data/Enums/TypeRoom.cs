@@ -8,7 +8,7 @@ namespace Tutorials.Data.Enums
 {
     public enum TypeRoom
     {
-        Private,
+        Private=1,
         Public
     }
 }
