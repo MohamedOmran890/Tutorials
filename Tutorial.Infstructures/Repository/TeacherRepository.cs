@@ -28,7 +28,7 @@ namespace Tutorial.Infstructures.Repository
 
         public async Task<IEnumerable<Teacher>> GetTeacherByCity(string City)
         {
-            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => (int)c.Address.City == int.Parse(City)).ToListAsync();
+            return await _tutorialDbContext.Teachers.AsNoTracking().Where(c => c.Address.City ==City).ToListAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetTeacherByRegion(string Region)
@@ -41,7 +41,7 @@ namespace Tutorial.Infstructures.Repository
             var teachers  = _tutorialDbContext.Teachers as IQueryable<Teacher>;
             if (!string.IsNullOrWhiteSpace(CityID))
             {
-                teachers = teachers.Where(i=>(int)i.Address.City ==  int.Parse(CityID));
+                teachers = teachers.Where(i=>i.Address.City == CityID);
             }
             
             if (!string.IsNullOrWhiteSpace(Name))

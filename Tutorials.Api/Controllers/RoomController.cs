@@ -42,7 +42,7 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpGet("GetRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+        [HttpGet("GetAllRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
         public async Task<IActionResult> GetRoomBySubjectAndTeacherAndLevel (int SubjectId , int TeacherId , int LevelId)
         {
