@@ -42,7 +42,7 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpGet("Get Rooms By Subject And Teacher And Level then filtering /{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+        [HttpPost("Get Rooms By Subject And Teacher And Level then filtering /{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
         public async Task<IActionResult> GetRoomsBySubjectAndTeacherAndLevelthenFiltering(int SubjectId, int TeacherId, int LevelId, FilterDTO options, bool filterValue)
         {
@@ -66,6 +66,15 @@ namespace Tutorials.Api.Controllers
             var rooms = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetLocationRooms(SubjectId, TeacherId, LevelId));
             if (rooms == null)
                 return BadRequest();
+            return Ok(rooms);
+        }
+        [HttpPost("FilterAllRooms/{SubjectId:int}/{City:alph}/{LevelId:int}")]
+
+        public async Task <IActionResult> FilterAllRooms (int SubjectId , int LevelId , string City , FilterDTO options )
+        {
+            var rooms  = _mapper.Map<List<RoomDTO>> (await _unitOfWork.Room.FilterAllgroups(SubjectId , LevelId , City , options));
+            if(rooms == null)
+               return BadRequest();
             return Ok(rooms);
         }
 

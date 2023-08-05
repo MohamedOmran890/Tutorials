@@ -11,6 +11,11 @@ namespace Tutorial.Infstructures.DTO
         public string Region {get; set;}
         public double Price{get; set;}
 
+        public int SubjectId {get; set;}
+
+        public int LevelId {get;set;}
+        public string City {get; set;}
+
 
 
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ namespace Tutorials.Data.Enums
 {
     public enum City
     {
-        qnea =  0 , 
-        cairo =1 ,
+        NoCity =0 , 
+        Qena , 
+        cairo  ,
     }
 }

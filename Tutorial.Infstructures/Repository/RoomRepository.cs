@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,24 @@ namespace Tutorial.Infstructures.Repository
 
         public  async Task<IEnumerable<Room>> GetRoomByTeacherAndSubjecAndLevel(int SubjectId , int TeacherId , int LevelId )
         {
-            return await _tutorialDbContext.Rooms.Where(r=>r.SubjectId ==SubjectId&& r.TeacherId ==TeacherId && r.LevelId==LevelId).ToListAsync();
+
+            IQueryable<Room> query = _tutorialDbContext.Rooms;
+
+            if (SubjectId != 0)
+            {
+                query = query.Where(room => room.SubjectId == SubjectId);
+            }
+
+            if (LevelId != 0)
+            {
+                query = query.Where(room => room.LevelId == LevelId);
+            }
+
+            if (TeacherId != 0)
+            {
+                query = query.Where(room => room.TeacherId == LevelId);
+            }
+            return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<string>> GetLocationRooms (int SubjectId , int TeacherId , int LevelId)
@@ -52,9 +70,9 @@ namespace Tutorial.Infstructures.Repository
         public async Task<IEnumerable<RoomDTO>> FilterRooms (IEnumerable<RoomDTO> rooms  , FilterDTO options ) 
         {
             // client server can send zero if user dosesn't select 
-             if (options.TypeRoom  != 0)
+             if (options.TypeRoom  != TypeRoom.notype)
              {
-                rooms = rooms.Where(room =>  room.TypeRoom == options.TypeRoom).ToList();
+                rooms = rooms.Where(room =>  room.TypeRoom == options.TypeRoom);
              }
              if (options.Days  != null )
              {
@@ -65,22 +83,89 @@ namespace Tutorial.Infstructures.Repository
 
                 }
                 // ?? why to list ??
-                rooms  =  rooms.Where(room=>((int)room.DayOfWeeks & All) != 0).ToList();
+                rooms  =  rooms.Where(room=>((int)room.DayOfWeeks & All) != 0);
 
              }
              // query string
-             if (!string.IsNullOrWhiteSpace(options.Region))
+             if (!string.IsNullOrEmpty(options.Region))
              {
-                rooms =  rooms.Where(room=>room.Region == options.Region).ToList();
+                rooms =  rooms.Where(room=>room.Region == options.Region);
     
 
              }
              if (options.Price != 0)
              {
-                rooms = rooms.Where(room=>room.Price <= options.Price ).ToList();
+                rooms = rooms.Where(room=>room.Price <= options.Price );
              }
              return  rooms ; 
 
+        }
+
+
+        public async Task<IEnumerable<Room>> FilterAllgroups  (int SubjectId ,int LevelId , string  City , FilterDTO options  )
+        {
+
+            IQueryable<Room> query = _tutorialDbContext.Rooms;
+
+            if (SubjectId != 0)
+            {
+                query = query.Where(room => room.SubjectId == SubjectId);
+            }
+
+            if (LevelId != 0)
+            {
+                query = query.Where(room => room.LevelId == LevelId);
+            }
+
+            if (City != null )
+            {
+                query = query.Where(room =>room.Center.Address.City == City);
+            }
+
+            if (options.TypeRoom != TypeRoom.notype)
+            {
+                query = query.Where(room => room.TypeRoom == options.TypeRoom);
+            }
+            if (options.Days != null)
+            {
+                int All = 0;
+                foreach (int day in options.Days)
+                {
+                    All = All | day;
+
+                }
+                // ?? why to list ??
+                query = query.Where(room => ((int)room.DayOfWeeks & All) != 0) ;
+
+            }
+            // query string
+            if (!string.IsNullOrEmpty(options.Region))
+            {
+                query = query.Where(room => room.Center.Address.Region== options.Region);
+
+
+            }
+            if (options.Price != 0)
+            {
+                query = query.Where(room => room.Price <= options.Price);
+            }
+
+
+            if (options.SubjectId != 0)
+            {
+                query = query.Where(room => room.SubjectId == SubjectId);
+            }
+
+            if (options.LevelId != 0)
+            {
+                query = query.Where(room => room.LevelId == LevelId);
+            }
+
+            if (options.City != null)
+            {
+                query = query.Where(room => room.Center.Address.City == City);
+            }
+            return await query.ToListAsync();
         }
 
     }
