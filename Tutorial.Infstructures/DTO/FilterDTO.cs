@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Tutorials.Data.Entities ;
 
-namespace Tutorials.Api.DTO
+namespace Tutorial.Infstructures.DTO
 {
     public class FilterDTO
     {

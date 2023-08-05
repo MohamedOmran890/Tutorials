@@ -1,6 +1,6 @@
 ﻿using Tutorials.Data.Entities;
 
-namespace Tutorials.Api.DTO
+namespace Tutorial.Infstructures.DTO
 {
     public class TeacherDto
     {

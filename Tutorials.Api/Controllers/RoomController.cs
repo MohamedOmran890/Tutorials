@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Tutorial.Infstructures.UnitOfWorks;
 using AutoMapper;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO ;
 using Tutorials.Data.Entities;
 namespace Tutorials.Api.Controllers
 {

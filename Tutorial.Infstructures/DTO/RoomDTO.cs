@@ -1,7 +1,8 @@
 using Tutorials.Data.Enums ;
 
 
-namespace Tutorials.Api.DTO {
+namespace Tutorial.Infstructures.DTO
+{
 
     public class RoomDTO  {
 
