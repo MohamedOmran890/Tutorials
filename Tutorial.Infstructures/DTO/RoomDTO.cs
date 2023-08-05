@@ -18,13 +18,14 @@ namespace Tutorial.Infstructures.DTO
 
 
         public DayRoom DayOfWeeks { get; set; }
-        public int CenterId { get; set; }
-        public Center Center {get; set;}
-    
-        public int TeacherId { get; set; }
-        public int SubjectId { get; set; }
+        
+        public string Region {get; set;}
+            
+        public string TeacherName {get; set;}
 
-        public int LevelId { get; set; }
+        public string SubjectName {get; set;}
+
+        public string levelName {get; set;}
 
 
 

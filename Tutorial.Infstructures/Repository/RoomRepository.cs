@@ -71,7 +71,7 @@ namespace Tutorial.Infstructures.Repository
              // query string
              if (!string.IsNullOrWhiteSpace(options.Region))
              {
-                rooms =  rooms.Where(room=>room.Center.Address.Region== options.Region).ToList();
+                rooms =  rooms.Where(room=>room.Region == options.Region).ToList();
     
 
              }
