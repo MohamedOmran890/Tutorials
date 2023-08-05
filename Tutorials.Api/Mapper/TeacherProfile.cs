@@ -1,5 +1,5 @@
 using AutoMapper;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
 
 namespace Tutorials.Api.Mapper

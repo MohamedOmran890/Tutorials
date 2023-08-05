@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Tutorial.Infstructures.UnitOfWorks;
 using AutoMapper;
-using Tutorial.Infstructures.DTO ;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
 namespace Tutorials.Api.Controllers
 {
@@ -42,12 +42,18 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpGet("GetAllRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+        [HttpGet("Get Rooms By Subject And Teacher And Level then filtering /{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
-        public async Task<IActionResult> GetRoomBySubjectAndTeacherAndLevel(int SubjectId, int TeacherId, int LevelId)
+        public async Task<IActionResult> GetRoomsBySubjectAndTeacherAndLevelthenFiltering(int SubjectId, int TeacherId, int LevelId, FilterDTO options, bool filterValue)
         {
 
-            var rooms = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetRoomByTeacherAndSubjecAndLevel(SubjectId, TeacherId, LevelId));
+
+            var rooms = _mapper.Map<IEnumerable<RoomDTO>>(await _unitOfWork.Room.GetRoomByTeacherAndSubjecAndLevel(SubjectId, TeacherId, LevelId));
+            if (filterValue)
+            {
+                rooms = await _unitOfWork.Room.FilterRooms(rooms, options);
+
+            }
             if (rooms == null)
                 return BadRequest();
             return Ok(rooms);
@@ -63,15 +69,7 @@ namespace Tutorials.Api.Controllers
             return Ok(rooms);
         }
 
-        [HttpPost("FilterRooms")]
-        public async Task<IActionResult> FilterRooms( FilterDTO filterDTO)
-        {
-            var RoomsAfterFilter = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.FilterRooms(filterDTO.rooms, filterDTO.typeRoom, filterDTO.Days, filterDTO.region, filterDTO.price));
-            if (RoomsAfterFilter == null)
-                return BadRequest();
-            return Ok(RoomsAfterFilter);
-
-        }
+       
 
 
 

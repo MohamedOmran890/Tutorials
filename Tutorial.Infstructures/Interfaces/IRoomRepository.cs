@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tutorials.Data.Entities;
+using Tutorial.Infstructures.DTO ;
 
 namespace Tutorial.Infstructures.Interfaces
 {
@@ -14,7 +15,7 @@ namespace Tutorial.Infstructures.Interfaces
         public Task<IEnumerable<Room>> GetRoomBySubject(int SubjectId);
         public Task<IEnumerable<Room>> GetRoomByTeacherAndSubjecAndLevel(int SubjectId, int TeacherId, int LevelId);
         public Task<IEnumerable<string>> GetLocationRooms(int SubjectId, int TeacherId, int LevelId);
-        public Task<IEnumerable<Room>> FilterRooms(List<Room> rooms, int typeRoom, List<int> days, string region, double price);
+        public Task<IEnumerable<RoomDTO>> FilterRooms(IEnumerable<RoomDTO> rooms, FilterDTO options) ;
 
 
 

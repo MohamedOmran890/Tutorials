@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Xml.Linq;
 using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.UnitOfWorks;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Context ;
 
 namespace Tutorials.Api.Controllers

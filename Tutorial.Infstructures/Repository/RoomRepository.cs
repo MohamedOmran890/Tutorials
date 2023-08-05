@@ -9,6 +9,7 @@ using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
 using Tutorials.Data.Entities;
 using Tutorials.Data.Enums; 
+using Tutorial.Infstructures.DTO ;
 namespace Tutorial.Infstructures.Repository
 {
     public class RoomRepository : GenricRepository<Room>, IRoomRepository
@@ -48,17 +49,17 @@ namespace Tutorial.Infstructures.Repository
             return await Task.FromResult(regions); ;
         }
                
-        public async Task<IEnumerable<Room>> FilterRooms (List<Room> rooms  , int typeRoom  , List<int> days  , string region ,double price ) 
+        public async Task<IEnumerable<RoomDTO>> FilterRooms (IEnumerable<RoomDTO> rooms  , FilterDTO options ) 
         {
             // client server can send zero if user dosesn't select 
-             if (typeRoom != 0)
+             if (options.TypeRoom  != 0)
              {
-                rooms = rooms.Where(room => (int) room.TypeRoom == typeRoom).ToList();
+                rooms = rooms.Where(room =>  room.TypeRoom == options.TypeRoom).ToList();
              }
-             if (days  != null )
+             if (options.Days  != null )
              {
                 int All = 0;
-                foreach(int day in days )
+                foreach(int day in  options.Days )
                 {
                     All =All |day  ;
 
@@ -68,15 +69,15 @@ namespace Tutorial.Infstructures.Repository
 
              }
              // query string
-             if (!string.IsNullOrWhiteSpace(region))
+             if (!string.IsNullOrWhiteSpace(options.Region))
              {
-                rooms =  rooms.Where(room=>room.Center.Address.Region== region).ToList();
+                rooms =  rooms.Where(room=>room.Center.Address.Region== options.Region).ToList();
     
 
              }
-             if (price != 0)
+             if (options.Price != 0)
              {
-                rooms = rooms.Where(room=>room.Price <= price ).ToList();
+                rooms = rooms.Where(room=>room.Price <= options.Price ).ToList();
              }
              return  rooms ; 
 
