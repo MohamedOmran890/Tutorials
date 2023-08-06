@@ -31,7 +31,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult>GetAllSubject()
         {
-            var subjects = _mapper.Map<IEnumerable<SubjectDto>>(await _unitOfWork.Subjects.GetList());
+            var subjects = _mapper.Map<IEnumerable<SubjectDto>>( _unitOfWork.Subjects.GetListAsTracking);
             return Ok(subjects);
 
         }

@@ -3,7 +3,7 @@ using System;
 using System.Data.Common;
 using System.Security.Claims;
 using System.Reflection;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO ;
 using Microsoft.AspNetCore.Mvc;
 using Tutorials.Data.Context;
 using Tutorials.Data.Entities;

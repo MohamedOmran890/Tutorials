@@ -23,25 +23,29 @@ namespace Tutorial.Infstructures.GenricRepository
             return await _tutorialDbContext.Set<T>().FindAsync(Id);
         }
 
-        public async Task<List<T?>> GetList()
+        public async Task<List<T>> GetListAsNoTracking()
         {
             return await _tutorialDbContext.Set<T>()
             .AsNoTracking()
             .ToListAsync();
         }
 
-        public  async Task<T?> Update(int Id, T NewObj)
+        public async Task<List<T>> GetListAsTracking()
         {
-            var OldObj=await GetById(Id);
-            
-            _tutorialDbContext.Entry(OldObj).CurrentValues.SetValues(NewObj);
-             //_tutorialDbContext.Set<T>().Update(NewObj);
-            await _tutorialDbContext.SaveChangesAsync();
+            return await _tutorialDbContext.Set<T>()
+            .ToListAsync();
+        }
+
+        public T? Update(int Id, T NewObj)
+        {
+            var OldObj = GetById(Id);
+            _tutorialDbContext.Set<T>().Update(NewObj);
+            _tutorialDbContext.SaveChanges();
             return NewObj;
         }
         public async Task<T?> Create(T NewObj)
         {
-             await _tutorialDbContext.Set<T>().AddAsync(NewObj);
+            await _tutorialDbContext.Set<T>().AddAsync(NewObj);
             _tutorialDbContext.SaveChanges();
             return NewObj;
         }
@@ -60,6 +64,6 @@ namespace Tutorial.Infstructures.GenricRepository
 
         }
 
-      
+
     }
 }

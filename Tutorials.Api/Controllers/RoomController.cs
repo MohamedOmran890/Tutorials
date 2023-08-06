@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Tutorial.Infstructures.UnitOfWorks;
 using AutoMapper;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
+using Tutorials.Api.DTO;
+
 namespace Tutorials.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -54,10 +56,16 @@ namespace Tutorials.Api.Controllers
 
         [HttpGet("GetAllRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
-        public async Task<IActionResult> GetRoomBySubjectAndTeacherAndLevel(int SubjectId, int TeacherId, int LevelId)
+        public async Task<IActionResult> GetRoomsBySubjectAndTeacherAndLevelthenFiltering(int SubjectId, int TeacherId, int LevelId, FilterDTO options, bool filterValue)
         {
 
-            var rooms = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.GetRoomByTeacherAndSubjecAndLevel(SubjectId, TeacherId, LevelId));
+
+            var rooms = _mapper.Map<IEnumerable<RoomDTO>>(await _unitOfWork.Room.GetRoomByTeacherAndSubjecAndLevel(SubjectId, TeacherId, LevelId));
+            if (filterValue)
+            {
+                rooms = await _unitOfWork.Room.FilterRooms(rooms, options);
+
+            }
             if (rooms == null)
                 return BadRequest();
             return Ok(rooms);
@@ -72,9 +80,9 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
+        [HttpPost("FilterAllRooms/{SubjectId:int}/{City:alph}/{LevelId:int}")]
 
-        [HttpPost("FilterRooms")]
-        public async Task<IActionResult> FilterRooms( FilterDTO filterDTO)
+        public async Task <IActionResult> FilterAllRooms (int SubjectId , int LevelId , string City , FilterDTO options )
         {
             var RoomsAfterFilter = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.FilterRooms(filterDTO.rooms, filterDTO.typeRoom, filterDTO.Days, filterDTO.region, filterDTO.price));
             if (RoomsAfterFilter == null)
@@ -101,7 +109,7 @@ namespace Tutorials.Api.Controllers
                 return BadRequest(roomDto);
             var editRoom = _mapper.Map<Room>(roomDto);
             editRoom.Id = Id;
-            var room = await _unitOfWork.Room.Update(Id,editRoom);
+            var room =  _unitOfWork.Room.Update(Id,editRoom);
             if (room != null)
                 return Ok(room);
             return BadRequest(room);

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Api.DTO;
 using Tutorials.Data.Entities;
 

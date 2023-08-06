@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Xml.Linq;
 using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.UnitOfWorks;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Context ;
 
 namespace Tutorials.Api.Controllers
@@ -28,7 +28,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-        var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetList());
+        var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetListAsNoTracking());
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -85,9 +85,6 @@ namespace Tutorials.Api.Controllers
                 return RedirectToAction("GetAll");
             }
          return  Ok (_mapper.Map<IEnumerable<TeacherCartDto>>(await _unitOfWork.teachers.FilteringTeachersByCity(CityID , Name))) ;
-            
-           
-        
 
         }
 

@@ -1,7 +1,8 @@
+using System.Net.Http.Headers;
 using Tutorials.Data.Enums ;
-
-
-namespace Tutorials.Api.DTO {
+using Tutorials.Data.Entities ;
+namespace Tutorial.Infstructures.DTO
+{
 
     public class RoomDTO  {
 
@@ -15,13 +16,16 @@ namespace Tutorials.Api.DTO {
         public int SizeRoom { get; set; }
         public double Duration { get; set; }
 
-        public DayRoom DayOfWeeks { get; set; }
-        public int CenterId { get; set; }
-    
-        public int TeacherId { get; set; }
-        public int SubjectId { get; set; }
 
-        public int LevelId { get; set; }
+        public DayRoom DayOfWeeks { get; set; }
+        
+        public string Region {get; set;}
+            
+        public string TeacherName {get; set;}
+
+        public string SubjectName {get; set;}
+
+        public string levelName {get; set;}
 
 
 
