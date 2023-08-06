@@ -14,7 +14,10 @@ namespace Tutorials.Api.Mapper
                 .ForMember(dest => dest.SizeRoom, opt => opt.MapFrom(s => s.SizeRoom))
                 .ForMember(dest => dest.CurrentStudentNumber, opt => opt.MapFrom(s => s.CurrentStudentNumber))
                 .ForMember(dest => dest.TypeRoom, opt => opt.MapFrom(s => s.TypeRoom))
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<CreatRoomDto, Room>();
+            CreateMap<RoomStudentDto, RoomStudent>();
 
         }
     }

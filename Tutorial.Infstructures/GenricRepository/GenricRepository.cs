@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
+using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.GenricRepository
 {
@@ -29,11 +30,13 @@ namespace Tutorial.Infstructures.GenricRepository
             .ToListAsync();
         }
 
-        public  T? Update(int Id, T NewObj)
+        public  async Task<T?> Update(int Id, T NewObj)
         {
-            var OldObj=GetById(Id);
-             _tutorialDbContext.Set<T>().Update(NewObj);
-            _tutorialDbContext.SaveChanges();
+            var OldObj=await GetById(Id);
+            
+            _tutorialDbContext.Entry(OldObj).CurrentValues.SetValues(NewObj);
+             //_tutorialDbContext.Set<T>().Update(NewObj);
+            await _tutorialDbContext.SaveChangesAsync();
             return NewObj;
         }
         public async Task<T?> Create(T NewObj)
@@ -48,9 +51,12 @@ namespace Tutorial.Infstructures.GenricRepository
             var Obj = await GetById(Id);
 
             if (Obj is not null)
+            {
                 _tutorialDbContext.Set<T>().Remove(Obj);
-            _tutorialDbContext.SaveChanges();
-            return null;
+                _tutorialDbContext.SaveChanges();
+                return Obj;
+            }
+                return null;
 
         }
 

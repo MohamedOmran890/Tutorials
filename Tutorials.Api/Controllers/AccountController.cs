@@ -1,7 +1,6 @@
 
 using System;
 using System.Data.Common;
-
 using System.Security.Claims;
 using System.Reflection;
 using Tutorials.Api.DTO;

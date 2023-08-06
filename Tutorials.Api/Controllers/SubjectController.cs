@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tutorial.Infstructures.UnitOfWorks;
+using Tutorials.Api.DTO;
+using Tutorials.Data.Entities;
 
 namespace Tutorials.Api.Controllers
 {
@@ -19,12 +21,19 @@ namespace Tutorials.Api.Controllers
             _mapper = mapper;
 
         }
-        [HttpGet]
+        [HttpGet("{TeacherId:int}")]
         public async Task<IActionResult> GetSubjectByTeacher(int TeacherId)
         {
             var subjects= await _unitOfWork.SubjectsTeacher.GetSubjectByTeacher(TeacherId);
 
             return Ok(subjects);
+        }
+        [HttpGet()]
+        public async Task<IActionResult>GetAllSubject()
+        {
+            var subjects = _mapper.Map<IEnumerable<SubjectDto>>(await _unitOfWork.Subjects.GetList());
+            return Ok(subjects);
+
         }
 
        

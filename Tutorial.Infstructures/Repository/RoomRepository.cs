@@ -82,5 +82,10 @@ namespace Tutorial.Infstructures.Repository
 
         }
 
+        public async Task<IEnumerable<Room>> GetRoomByLevelAndSubject(int levelId, int subjectId)
+        {
+            return await _tutorialDbContext.Rooms.Where(r => r.LevelId == levelId && r.SubjectId == subjectId).ToListAsync();
+
+        }
     }
 }

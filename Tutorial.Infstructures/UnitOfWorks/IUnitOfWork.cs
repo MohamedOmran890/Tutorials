@@ -12,6 +12,7 @@ namespace Tutorial.Infstructures.UnitOfWorks
     {
         ITeacherRepository teachers { get; }
         ISubjectRepository Subjects { get; }
+        IRoom_StudentRepository RoomStudent { get; }
         IRoomRepository Room { get; }
         ILevelRepository Level { get; }
         IGenricRepository<Student> Students { get; }

@@ -42,6 +42,16 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
+        [HttpGet("GetRoomByLevelAndSubject")]
+        public async Task<IActionResult> GetRoomByLevelAndSubject(int levelId,int subjectId)
+        {
+            if (levelId < 0 || subjectId < 0)
+                return NotFound("levelId or subjectId NOt Vaild");
+          var rooms=_mapper.Map<IEnumerable<RoomDTO>>(await _unitOfWork.Room.GetRoomByLevelAndSubject(levelId, subjectId));
+            return Ok(rooms);
+
+        }
+
         [HttpGet("GetAllRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
         public async Task<IActionResult> GetRoomBySubjectAndTeacherAndLevel(int SubjectId, int TeacherId, int LevelId)
@@ -72,6 +82,41 @@ namespace Tutorials.Api.Controllers
             return Ok(RoomsAfterFilter);
 
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateRoom(CreatRoomDto roomDTO)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(roomDTO);
+            var newRoom = _mapper.Map<Room>(roomDTO);
+            var Room= await _unitOfWork.Room.Create(newRoom);
+            if (Room != null)
+                return Ok(Room);
+            return BadRequest(Room);
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditRoom(int Id,RoomDTO roomDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(roomDto);
+            var editRoom = _mapper.Map<Room>(roomDto);
+            editRoom.Id = Id;
+            var room = await _unitOfWork.Room.Update(Id,editRoom);
+            if (room != null)
+                return Ok(room);
+            return BadRequest(room);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRoom(int Id)
+        {
+            if (Id < 0)
+                return NotFound();
+            var room=await _unitOfWork.Room.DeleteById(Id);
+            if (room != null)
+                return Ok(room);
+            return BadRequest();
+        }
+        
 
 
 
