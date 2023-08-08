@@ -14,5 +14,7 @@ namespace Tutorials.Data.Entities
         public virtual Subject Subject { get; set; }
         public int LevelId {get; set;}
         public Level Level {get; set;}
+        public int CenterId {get; set;}
+        public Center center {get; set;}
     }
 }

@@ -16,6 +16,7 @@ namespace Tutorials.Data.Entities
         public virtual Address Address { get; set; }
 
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<SubjectTeacher> SubjectTeachers {get; set;}
 
     }
 }

@@ -52,5 +52,7 @@ namespace Tutorial.Infstructures.Repository
             return await teachers.ToListAsync();
 
         }
+
+       
     }
 }

@@ -1,19 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tutorial.Infstructures.GenricRepository;
 using Tutorial.Infstructures.Interfaces;
-using Tutorials.Data.Context;
-using Tutorials.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
+using Tutorials.Data.Context ;
+
 
 using Microsoft.AspNetCore.Http;
 
@@ -22,10 +10,12 @@ namespace Tutorial.Infstructures.Repository
     public  class IdentityRepository : IIdentityRepository
     {
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly TutorialDbContext _tutorialDbContext;
 
-        public IdentityRepository(IHttpContextAccessor httpContextAccessor)
+        public IdentityRepository(IHttpContextAccessor httpContextAccessor  , TutorialDbContext tutorialDbContext)
         {
             this.httpContextAccessor = httpContextAccessor;
+            _tutorialDbContext = tutorialDbContext;
         }
 
         public string  GetUserID()
@@ -33,6 +23,10 @@ namespace Tutorial.Infstructures.Repository
             return  httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value ;
       
         
+        }
+        public int  GetTeacherID  ()
+        {
+            return _tutorialDbContext.Teachers.Where(i=>i.UserId == GetUserID()).Select(i=>i.TeacherId).FirstOrDefault();
         }
 
 

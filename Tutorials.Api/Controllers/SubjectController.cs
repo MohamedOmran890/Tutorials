@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tutorial.Infstructures.UnitOfWorks;
-using Tutorials.Api.DTO;
+using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
 
 namespace Tutorials.Api.Controllers
@@ -31,7 +31,7 @@ namespace Tutorials.Api.Controllers
         [HttpGet()]
         public async Task<IActionResult>GetAllSubject()
         {
-            var subjects = _mapper.Map<IEnumerable<SubjectDto>>( _unitOfWork.Subjects.GetListAsTracking);
+            var subjects = _mapper.Map<IEnumerable<SubjectDTO>>( _unitOfWork.Subjects.GetListAsTracking);
             return Ok(subjects);
 
         }

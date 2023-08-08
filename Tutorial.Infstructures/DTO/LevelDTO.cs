@@ -1,6 +1,6 @@
-﻿namespace Tutorial.Infstructures.DTO
+namespace Tutorial.Infstructures.DTO 
 {
-    public class SubjectDTO
+    public class LevelDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

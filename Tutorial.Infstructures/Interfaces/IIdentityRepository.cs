@@ -9,9 +9,12 @@ using System.Security.Claims;
 
 namespace Tutorial.Infstructures.Interfaces
 {
-    public interface IIdentityRepository 
+    public interface IIdentityRepository
     {
-         string GetUserID();
+        string GetUserID();
+        int GetTeacherID();
+
+
 
 
     }

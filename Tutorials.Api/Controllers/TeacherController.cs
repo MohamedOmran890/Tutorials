@@ -22,7 +22,7 @@ namespace Tutorials.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IIdentityRepository _identityRepository;
 
-        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper ,IIdentityRepository identityRepository )
+        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper, IIdentityRepository identityRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -90,26 +90,58 @@ namespace Tutorials.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<TeacherCartDto>>(await _unitOfWork.teachers.FilteringTeachersByCity(CityID, Name)));
 
         }
-        [HttpGet("check")]
+        [HttpGet("GetCentersoFTheTeacher")]
 
-        public async Task<IActionResult> check()
+        public async Task<IActionResult> GetCentersOfTeacher()
         {
-             
+
+            // User is authenticated
             if (User.Identity.IsAuthenticated)
             {
-                var userid = _identityRepository.GetUserID();
-                
-                // User is authenticated
-                return Ok(userid);
-            }
-            else
-            {
+                var TeacherId = _identityRepository.GetTeacherID();
+                //    // User is not authenticated
+                // return Unauthorized("Not Authenticated!");
                 // User is not authenticated
-                return Unauthorized("Not Authenticated!");
+
+                var centers = _unitOfWork.SubjectsTeacher.GetCentersByTeacher(TeacherId);
+                return Ok(centers);
+
             }
+            return Unauthorized();
 
         }
+        [HttpGet("GetSubjectbyTeacherAndCenter")]
+        public async Task<IActionResult> GetSubjectbyTeacherAndCenter(int CenterId)
+        {
 
+            // User is authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                var TeacherId = _identityRepository.GetTeacherID();
+               
+                var subjects  = _unitOfWork.SubjectsTeacher.GetSubjectbyTeacherAndCenter(TeacherId , CenterId);
+                return Ok(subjects);
+
+            }
+            return Unauthorized();
+
+        }
+        [HttpGet("GetLevelsbySubjectAndTeacherAndCenter")]
+        public async Task<IActionResult> GetLevelsbySubjectAndTeacherAndCenter (int CenterId , int SubjectId)
+        {
+
+            // User is authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                var TeacherId = _identityRepository.GetTeacherID();
+
+                var subjects = _unitOfWork.SubjectsTeacher.GetLevelsbyTeacherAndCenterAndSubject(TeacherId, CenterId , SubjectId);
+                return Ok(subjects);
+
+            }
+            return Unauthorized();
+
+        }
 
     }
 }

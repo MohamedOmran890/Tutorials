@@ -17,6 +17,7 @@ namespace Tutorials.Data.Entities
         public string UserId { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<SubjectTeacher> SubjectTeachers { get; set; }
+        
 
         
 

@@ -1,4 +1,4 @@
-﻿using Tutorials.Api.DTO;
+﻿using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
 
 namespace Tutorials.Api.Mapper
@@ -7,7 +7,7 @@ namespace Tutorials.Api.Mapper
     {
         public SubjectProfile()
         {
-            CreateMap<Subject, SubjectDto>().ReverseMap();
+            CreateMap<Subject, SubjectDTO>().ReverseMap();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Tutorials.Data.Context
 {
     public class TutorialDbContext : IdentityDbContext<User>
     {
-        public TutorialDbContext(DbContextOptions<TutorialDbContext> Options):base(Options)
+        public TutorialDbContext(DbContextOptions<TutorialDbContext> Options) : base(Options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -22,8 +22,8 @@ namespace Tutorials.Data.Context
             base.OnModelCreating(builder);
 
 
-            builder.Entity<RoomStudent>().HasKey(k => new { k.RoomId,k.StudentId});
-            
+            builder.Entity<RoomStudent>().HasKey(k => new { k.RoomId, k.StudentId });
+
             builder.Entity<RoomStudent>()
                 .HasOne(e => e.Room)
                 .WithMany(s => s.RoomStudents)
@@ -34,8 +34,8 @@ namespace Tutorials.Data.Context
                 .WithMany(c => c.RoomStudents)
                 .HasForeignKey(e => e.StudentId);
 
-            builder.Entity<SubjectTeacher>().HasKey(k => new { k.TeacherId,k.SubjectId , k.LevelId});
-            
+            builder.Entity<SubjectTeacher>().HasKey(k => new { k.TeacherId, k.SubjectId, k.LevelId, k.CenterId });
+
             builder.Entity<SubjectTeacher>()
                 .HasOne(e => e.Subject)
                 .WithMany(s => s.SubjectTeachers)
@@ -45,10 +45,16 @@ namespace Tutorials.Data.Context
                 .HasOne(e => e.Teacher)
                 .WithMany(c => c.SubjectTeachers)
                 .HasForeignKey(e => e.TeacherId);
+
             builder.Entity<SubjectTeacher>()
                 .HasOne(e => e.Level)
                 .WithMany(c => c.SubjectTeachers)
                 .HasForeignKey(e => e.LevelId);
+
+            builder.Entity<SubjectTeacher>()
+            .HasOne(e => e.center)
+            .WithMany(c => c.SubjectTeachers)
+            .HasForeignKey(e => e.CenterId);
 
         }
         public DbSet<Address> Addresses { get; set; }
@@ -61,7 +67,7 @@ namespace Tutorials.Data.Context
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<RoomStudent> RoomStudents { get; set; }
-        public DbSet<SubjectTeacher> Teacher_Subjects { get; set; } 
+        public DbSet<SubjectTeacher> Teacher_Subjects { get; set; }
 
 
     }
