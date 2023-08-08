@@ -4,6 +4,8 @@ using Tutorial.Infstructures.UnitOfWorks;
 using AutoMapper;
 using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Entities;
+using Tutorials.Api.DTO;
+
 namespace Tutorials.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -42,7 +44,17 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpPost("Get Rooms By Subject And Teacher And Level then filtering /{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
+        [HttpGet("GetRoomByLevelAndSubject")]
+        public async Task<IActionResult> GetRoomByLevelAndSubject(int levelId,int subjectId)
+        {
+            if (levelId < 0 || subjectId < 0)
+                return NotFound("levelId or subjectId NOt Vaild");
+          var rooms=_mapper.Map<IEnumerable<RoomDTO>>(await _unitOfWork.Room.GetRoomByLevelAndSubject(levelId, subjectId));
+            return Ok(rooms);
+
+        }
+
+        [HttpGet("GetAllRoomBySubjectAndTeacherAndLevel/{SubjectId:int}/{TeacherId:int}/{LevelId:int}")]
 
         public async Task<IActionResult> GetRoomsBySubjectAndTeacherAndLevelthenFiltering(int SubjectId, int TeacherId, int LevelId, FilterDTO options, bool filterValue)
         {
@@ -72,13 +84,47 @@ namespace Tutorials.Api.Controllers
 
         public async Task <IActionResult> FilterAllRooms (int SubjectId , int LevelId , string City , FilterDTO options )
         {
-            var rooms  = _mapper.Map<List<RoomDTO>> (await _unitOfWork.Room.FilterAllgroups(SubjectId , LevelId , City , options));
-            if(rooms == null)
-               return BadRequest();
-            return Ok(rooms);
-        }
+            var RoomsAfterFilter = _mapper.Map<List<RoomDTO>>(await _unitOfWork.Room.FilterRooms(filterDTO.rooms, filterDTO.typeRoom, filterDTO.Days, filterDTO.region, filterDTO.price));
+            if (RoomsAfterFilter == null)
+                return BadRequest();
+            return Ok(RoomsAfterFilter);
 
-       
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateRoom(CreatRoomDto roomDTO)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(roomDTO);
+            var newRoom = _mapper.Map<Room>(roomDTO);
+            var Room= await _unitOfWork.Room.Create(newRoom);
+            if (Room != null)
+                return Ok(Room);
+            return BadRequest(Room);
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> EditRoom(int Id,RoomDTO roomDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(roomDto);
+            var editRoom = _mapper.Map<Room>(roomDto);
+            editRoom.Id = Id;
+            var room =  _unitOfWork.Room.Update(Id,editRoom);
+            if (room != null)
+                return Ok(room);
+            return BadRequest(room);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRoom(int Id)
+        {
+            if (Id < 0)
+                return NotFound();
+            var room=await _unitOfWork.Room.DeleteById(Id);
+            if (room != null)
+                return Ok(room);
+            return BadRequest();
+        }
+        
 
 
 

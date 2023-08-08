@@ -168,5 +168,10 @@ namespace Tutorial.Infstructures.Repository
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<Room>> GetRoomByLevelAndSubject(int levelId, int subjectId)
+        {
+            return await _tutorialDbContext.Rooms.Where(r => r.LevelId == levelId && r.SubjectId == subjectId).ToListAsync();
+
+        }
     }
 }

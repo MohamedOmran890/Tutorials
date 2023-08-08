@@ -8,7 +8,7 @@ using Tutorial.Infstructures.DTO ;
 
 namespace Tutorial.Infstructures.Interfaces
 {
-    public interface IRoomRepository:IGenricRepository<Room>
+    public interface IRoomRepository : IGenricRepository<Room>
     {
         public Task<IEnumerable<Room>> GetRoomByLevelId(int LevelId);
         public Task<IEnumerable<Room>> GetRoomByTeacher(int TeacherId);
@@ -17,6 +17,7 @@ namespace Tutorial.Infstructures.Interfaces
         public Task<IEnumerable<string>> GetLocationRooms(int SubjectId, int TeacherId, int LevelId);
         public Task<IEnumerable<RoomDTO>> FilterRooms(IEnumerable<RoomDTO> rooms, FilterDTO options) ;
         public Task<IEnumerable<Room>> FilterAllgroups(int SubjectId, int LevelId, string City, FilterDTO options);
+        public Task<IEnumerable<Room>> GetRoomByLevelAndSubject(int levelId, int subjectId);
 
 
 

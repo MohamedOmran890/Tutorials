@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tutorial.Infstructures.Interfaces;
 using Tutorials.Data.Context;
+using Tutorials.Data.Entities;
 
 namespace Tutorial.Infstructures.GenricRepository
 {
@@ -54,9 +55,12 @@ namespace Tutorial.Infstructures.GenricRepository
             var Obj = await GetById(Id);
 
             if (Obj is not null)
+            {
                 _tutorialDbContext.Set<T>().Remove(Obj);
-            _tutorialDbContext.SaveChanges();
-            return null;
+                _tutorialDbContext.SaveChanges();
+                return Obj;
+            }
+                return null;
 
         }
 

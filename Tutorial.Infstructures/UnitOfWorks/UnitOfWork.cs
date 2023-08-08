@@ -24,6 +24,7 @@ namespace Tutorial.Infstructures.UnitOfWorks
         public IRoomRepository Room { get; private set; }
 
         public ISubjectTeacherRepository SubjectsTeacher { get; private set; }
+        public IRoom_StudentRepository RoomStudent { get; private set; }
 
         public UnitOfWork(TutorialDbContext tutorialDbContext)
         {
@@ -33,6 +34,7 @@ namespace Tutorial.Infstructures.UnitOfWorks
             Subjects = new SubjectRepository(_tutorialDbContext);
             Room = new RoomRepository(_tutorialDbContext);
             SubjectsTeacher = new SubjectTeacherRepository(_tutorialDbContext);
+            RoomStudent = new Room_StudentRepository(_tutorialDbContext);
 
         }
         public int Complete()
