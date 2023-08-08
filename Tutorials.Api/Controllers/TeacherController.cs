@@ -7,7 +7,8 @@ using System.Xml.Linq;
 using Tutorial.Infstructures.Interfaces;
 using Tutorial.Infstructures.UnitOfWorks;
 using Tutorial.Infstructures.DTO;
-using Tutorials.Data.Context ;
+using Tutorials.Data.Context;
+using System.Web;
 
 namespace Tutorials.Api.Controllers
 {
@@ -17,18 +18,18 @@ namespace Tutorials.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly HttpContext httpContext;
 
-
-        public TeacherController(IUnitOfWork unitOfWork,IMapper mapper )
+        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper, HttpContext httpContext)
         {
-           _unitOfWork=unitOfWork;
-            _mapper=mapper;
-            
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            this.httpContext = httpContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-        var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetListAsNoTracking());
+            var teachers = _mapper.Map<IEnumerable<TeacherDto>>(await _unitOfWork.teachers.GetListAsNoTracking());
             if (teachers == null)
                 return NotFound();
             return Ok(teachers);
@@ -36,9 +37,9 @@ namespace Tutorials.Api.Controllers
         [HttpGet("{Id:int}")]
         public async Task<IActionResult> GetById(int Id)
         {
-            var teacher=_mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetById(Id));
+            var teacher = _mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetById(Id));
             if (teacher == null)
-                return  NotFound();
+                return NotFound();
             return Ok(teacher);
         }
         [HttpGet("GetByName")]
@@ -50,7 +51,7 @@ namespace Tutorials.Api.Controllers
             return Ok(teachers);
         }
         [HttpGet("GetTeacherByCity")]
-        public async Task<IActionResult> GetTeacherByCity([FromQuery]string City)
+        public async Task<IActionResult> GetTeacherByCity([FromQuery] string City)
         {
             var teachers = _mapper.Map<TeacherDto>(await _unitOfWork.teachers.GetTeacherByCity(City));
             if (teachers == null)
@@ -71,22 +72,35 @@ namespace Tutorials.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int Id)
         {
-            var teacher=await _unitOfWork.teachers.DeleteById(Id);
+            var teacher = await _unitOfWork.teachers.DeleteById(Id);
             if (teacher == null)
                 return NotFound();
             return Ok(teacher);
 
         }
-          [HttpGet("FilteringTeacher")]
-        public  async Task<IActionResult> FilteringTeachersByCity  ([FromQuery] string CityID ,[FromQuery]string Name)
+        [HttpGet("FilteringTeacher")]
+        public async Task<IActionResult> FilteringTeachersByCity([FromQuery] string CityID, [FromQuery] string Name)
         {
-            if(string.IsNullOrWhiteSpace(CityID)&& string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(CityID) && string.IsNullOrWhiteSpace(Name))
             {
                 return RedirectToAction("GetAll");
             }
-         return  Ok (_mapper.Map<IEnumerable<TeacherCartDto>>(await _unitOfWork.teachers.FilteringTeachersByCity(CityID , Name))) ;
+            return Ok(_mapper.Map<IEnumerable<TeacherCartDto>>(await _unitOfWork.teachers.FilteringTeachersByCity(CityID, Name)));
 
         }
+        [HttpGet("check")]
+        public async Task<IActionResult> check()
+        {
+            if (httpContext.User.Identity.IsAuthenticated)
+            {
+                return Ok("okayyyyyy");
+
+            }
+            return Unauthorized();
+
+
+        }
+
 
     }
 }

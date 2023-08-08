@@ -68,7 +68,7 @@ namespace Tutorials.Api.Controllers
                 return BadRequest();
             return Ok(rooms);
         }
-        [HttpPost("FilterAllRooms/{SubjectId:int}/{City:alph}/{LevelId:int}")]
+        [HttpPost("FilterAllRooms/{SubjectId:int}/{City:alpha}/{LevelId:int}")]
 
         public async Task <IActionResult> FilterAllRooms (int SubjectId , int LevelId , string City , FilterDTO options )
         {
