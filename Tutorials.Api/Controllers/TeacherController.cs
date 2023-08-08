@@ -9,6 +9,8 @@ using Tutorial.Infstructures.UnitOfWorks;
 using Tutorial.Infstructures.DTO;
 using Tutorials.Data.Context;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Tutorials.Api.Controllers
 {
@@ -18,13 +20,13 @@ namespace Tutorials.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly HttpContext httpContext;
+    
 
-        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper, HttpContext httpContext)
+        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            this.httpContext = httpContext;
+    
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -89,16 +91,20 @@ namespace Tutorials.Api.Controllers
 
         }
         [HttpGet("check")]
+
         public async Task<IActionResult> check()
         {
-            if (httpContext.User.Identity.IsAuthenticated)
+
+            if (User.Identity.IsAuthenticated)
             {
-                return Ok("okayyyyyy");
-
+                // User is authenticated
+                return Ok("Authenticated!");
             }
-            return Unauthorized();
-
-
+            else
+            {
+                // User is not authenticated
+                return Unauthorized("Not Authenticated!");
+            }
         }
 
 

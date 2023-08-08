@@ -67,7 +67,7 @@ namespace Tutorial.Infstructures.Repository
             return await Task.FromResult(regions); ;
         }
                
-        public async Task<IEnumerable<RoomDTO>> FilterRooms (IEnumerable<RoomDTO> rooms  , FilterDTO options ) 
+        public async Task<IEnumerable<RoomDTO>> FilterSpecificRooms (IEnumerable<RoomDTO> rooms  , FilterDTO options ) 
         {
             // client server can send zero if user dosesn't select 
              if (options.TypeRoom  != TypeRoom.notype)
