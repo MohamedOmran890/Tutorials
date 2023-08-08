@@ -34,7 +34,7 @@ namespace Tutorials.Api
         {
 
             var builder = WebApplication.CreateBuilder(args);
-           Configuration = builder.Configuration;
+            Configuration = builder.Configuration;
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -44,6 +44,7 @@ namespace Tutorials.Api
             .AllowAnyMethod().AllowAnyHeader()));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddDbContext<TutorialDbContext>(Options => Options
             .UseSqlServer(builder.Configuration.GetConnectionString("Data")));
@@ -51,9 +52,10 @@ namespace Tutorials.Api
 
             builder.Services.AddScoped<UserManager<User>, UserManager<User>>();
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddTransient<IIdentityRepository, IdentityRepository>();
 
 
-            builder.Services.AddAutoMapper(typeof(UserProfile) , typeof(TeacherProfile) , typeof(RoomProfile));
+            builder.Services.AddAutoMapper(typeof(UserProfile), typeof(TeacherProfile), typeof(RoomProfile));
 
             builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TutorialDbContext>();
             builder.Services.AddAuthentication(options =>
@@ -110,7 +112,7 @@ namespace Tutorials.Api
         }
     });
 });
-    
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -121,7 +123,7 @@ namespace Tutorials.Api
             }
             app.UseCors();
             app.UseRouting();
-             app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseAuthentication();
 
             app.UseAuthorization();

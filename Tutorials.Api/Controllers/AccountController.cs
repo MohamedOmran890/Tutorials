@@ -72,9 +72,9 @@ namespace Tutorials.Api.Controllers
                     if (found)
                     {
                         var claims = new[] {
-                        new Claim(JwtRegisteredClaimNames.Name, UserDto.UserName),
+                        new Claim(ClaimTypes.Name, UserDto.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) ,
-                        new Claim(JwtRegisteredClaimNames.NameId, user.Id) };
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()) };
 
                         var roles = await _userManager.GetRolesAsync(user);
                         foreach (var role in roles)

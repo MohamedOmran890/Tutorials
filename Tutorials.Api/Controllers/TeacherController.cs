@@ -20,13 +20,13 @@ namespace Tutorials.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-    
+        private readonly IIdentityRepository _identityRepository;
 
-        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper)
+        public TeacherController(IUnitOfWork unitOfWork, IMapper mapper ,IIdentityRepository identityRepository )
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-    
+            _identityRepository = identityRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -94,17 +94,20 @@ namespace Tutorials.Api.Controllers
 
         public async Task<IActionResult> check()
         {
-
+             
             if (User.Identity.IsAuthenticated)
             {
+                var userid = _identityRepository.GetUserID();
+                
                 // User is authenticated
-                return Ok("Authenticated!");
+                return Ok(userid);
             }
             else
             {
                 // User is not authenticated
                 return Unauthorized("Not Authenticated!");
             }
+
         }
 
 
